@@ -1,171 +1,64 @@
 package Clases;
-public class Cola 
+import java.util.Scanner;
+public class Main
 {
-    int Numero = (int)(Math.random()*10+1);
-    
-    Nodo Ventanilla1 = null;
-    Nodo Ventanilla2 = null;
-    Nodo Ventanilla3 = null;
-
-    Nodo RaizVip = null;
-    Nodo CimaVip = null;
-    
-    Nodo RaizCom = null;
-    Nodo CimaCom = null;
-    
-    public void Insertar (String TipoCl)
-    {   
-        if (TipoCl.equals("VIP"))
-        {   
-            if (RaizVip == null)
+    public static void main (String[] args)
+    {
+        Scanner Leer = new Scanner (System.in);
+        
+        Cola Obj = new Cola();
+        
+        int Opc, x=1;
+        String[] Clientes = {"VIP", "COMUN"};
+        
+        while(x==1)
+        {
+            System.out.println(" ");
+            System.out.println("--------------------- Menu ---------------------");
+            System.out.println("Por favor elige una de las siguientes opciones");
+            System.out.println("1.- Nuevo Cliente");
+            System.out.println("2.- Pasar a Ventanilla");
+            System.out.println("3.- Mostrar Colas");
+            System.out.println("4.- Terminar Ventanilla");
+            System.out.println("5.- Salir");
+            Opc=Leer.nextInt();
+            
+            if(Opc>0 && Opc<6)
             {
-                Nodo NuevoVip = new Nodo(TipoCl, Numero);
-                RaizVip = NuevoVip;
-                CimaVip = NuevoVip;
+                switch(Opc)
+                {
+                    case 1:
+                        int Numero =(int) (Math.random()*2+0);
+                        if (Numero == 0)
+                        {
+                            Obj.Insertar(Clientes[0]);
+                        }
+                        else
+                        {
+                            Obj.Insertar(Clientes[1]);
+                        }
+                        System.out.println("Usuarios");
+                        Obj.Mostrar();
+                    break;
+                    case 2:
+                        Obj.Pasar();
+                    break;
+                    case 3:
+                        Obj.Mostrar();
+                    break;
+                    case 4: 
+                        Obj.Terminar();
+                    break;
+                    case 5:
+                        System.exit(0);
+                    break;
+                }
             }
             else
             {
-                Numero++;
-                Nodo NuevoVip = new Nodo(TipoCl,Numero);
-                CimaVip.Apuntador = NuevoVip;
-                CimaVip=NuevoVip;
+                System.out.println("Lo sentimos el numero ingresado es incorrecto");
+                System.out.println("Por favor elija una opcion valida");
             }
         }
-        else
-        {
-            if (RaizCom == null)
-            {
-                Nodo NuevoComun = new Nodo(TipoCl,Numero);
-                RaizCom = NuevoComun;
-                CimaCom = NuevoComun;
-            }
-            else
-            {
-                Numero++;
-                Nodo NuevoComun = new Nodo(TipoCl,Numero);
-                CimaCom.Apuntador = NuevoComun;
-                CimaCom=NuevoComun; 
-            }
-        } 
-    }
-    
-    public void Mostrar()
-    {
-        Nodo Rec1 = RaizVip;
-        Nodo Rec2 = RaizCom;
-        
-        if (Rec1 == null && Rec2 == null)
-        {
-            System.out.println("No hay ningun cliente en la cola");
-        }
-        else
-        {
-            System.out.print("Cola Vip: ");
-            while(Rec1 != null)
-            {
-                System.out.print(" "+ Rec1.TipoCl+Rec1.Numero);
-                Rec1 = Rec1.Apuntador;
-            }
-            System.out.println("");
-            System.out.print("Cola Comun: ");
-            while(Rec2 != null)
-            {
-                System.out.print(" "+ Rec2.TipoCl+Rec2.Numero);
-                Rec2 = Rec2.Apuntador;
-            }
-        }
-    }
-    
-    public void Pasar()
-    {
-       if(Ventanilla1 !=null && Ventanilla2 !=null && Ventanilla3 !=null)
-       {
-           System.out.println("Todas las ventanillas estan ocupadas");
-       }
-       if (RaizVip == null && RaizCom == null)
-       {
-           System.out.println("No hay clientes en esperando");
-       }
-       if(RaizVip !=null && Ventanilla1 == null)
-       {
-           Ventanilla1 = RaizVip;
-           RaizVip = RaizVip.Apuntador;
-       }
-       if(RaizVip != null && Ventanilla2 == null)
-       {
-           Ventanilla2 = RaizVip;
-           RaizVip = RaizVip.Apuntador;
-       }
-       if(RaizVip !=null && Ventanilla3 == null)
-       {
-           Ventanilla3 = RaizVip;
-           RaizVip = RaizVip.Apuntador;
-       }
-       if(RaizCom !=null && Ventanilla1 == null)
-       {
-           Ventanilla1 = RaizCom;
-           RaizCom = RaizCom.Apuntador;
-       }
-       if(RaizCom !=null && Ventanilla2 == null)
-       {
-           Ventanilla2 = RaizCom;
-           RaizCom = RaizCom.Apuntador;
-       }
-       if(RaizCom !=null && Ventanilla3 == null)
-       {
-           Ventanilla3 = RaizCom;
-           RaizCom = RaizCom.Apuntador;
-       }
-       
-       MostrarVent(Ventanilla1, Ventanilla2, Ventanilla3);
-       
-    }
-    
-    public void MostrarVent(Nodo Ventanilla1, Nodo Ventanilla2, Nodo Ventanilla3)
-    {
-        if (Ventanilla1 != null)
-        {
-            System.out.println("Ventanilla 1: "+Ventanilla1.TipoCl+Ventanilla1.Numero);
-        }
-        else
-        {
-            System.out.println("Ventanilla1 Disponible");
-        }
-        if (Ventanilla2 != null)
-        {
-            System.out.println("Ventanilla 2: "+Ventanilla2.TipoCl+Ventanilla2.Numero);
-        }
-        else
-        {
-            System.out.println("Ventanilla 2 Disponible");
-        }
-        if (Ventanilla3 != null)
-        {
-            System.out.println("Ventanilla 3: "+Ventanilla3.TipoCl+Ventanilla3.Numero);
-        }
-        else
-        {
-            System.out.println("Ventanilla3 Disponible");
-        }
-    }
-    
-    public void Terminar()
-    {
-        int Num = (int)(Math.random()*3+1);
-        
-        if (Num == 1)
-        {
-            Ventanilla1 = null;
-        }
-        if (Num == 2)
-        {
-            Ventanilla2 = null;
-        }
-        if (Num == 3)
-        {
-            Ventanilla3 = null;
-        }
-        
-        MostrarVent(Ventanilla1, Ventanilla2, Ventanilla3);
     }
 }
